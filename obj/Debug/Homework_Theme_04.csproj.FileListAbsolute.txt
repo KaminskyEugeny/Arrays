@@ -5,3 +5,10 @@ D:\skillbox\dz4\bin\Debug\Homework_Theme_04.exe
 D:\skillbox\dz4\bin\Debug\Homework_Theme_04.pdb
 D:\skillbox\dz4\obj\Debug\Homework_Theme_04.exe
 D:\skillbox\dz4\obj\Debug\Homework_Theme_04.pdb
+D:\skillbox\arr4\obj\Debug\Homework_Theme_04.csprojAssemblyReference.cache
+D:\skillbox\arr4\obj\Debug\Homework_Theme_04.csproj.CoreCompileInputs.cache
+D:\skillbox\arr4\obj\Debug\Homework_Theme_04.exe
+D:\skillbox\arr4\obj\Debug\Homework_Theme_04.pdb
+D:\skillbox\arr4\bin\Debug\Homework_Theme_04.exe.config
+D:\skillbox\arr4\bin\Debug\Homework_Theme_04.exe
+D:\skillbox\arr4\bin\Debug\Homework_Theme_04.pdb

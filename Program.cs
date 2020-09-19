@@ -43,11 +43,14 @@ namespace Homework_Theme_04
 
             int[,] arrRevenue = new int[12, 2];  // массив дохода по месяцам
             int[,] arrExpense = new int[12, 2];  // массив расхода по месяцам
-            int[,] arrProfit = new int[12, 4];   // массив прибыли
-      //      int[] arrWorstProfit = [12];         // массив худшей прибыли
+            int[,] arrProfit = new int[12, 2];   // массив прибыли
+            int[] arrWorstProfit = new int[12];        // массив худшей прибыли
             Random r = new Random();
-            int count=0;
-            //Определяем прибыли по месяцам:
+            int count=0;                         // переменная для хранения количества месяцев с положительной прибылью
+            int countWorstProfit = 0;            // переменная для хранения количества месяцев с худшей прибылью (до 3)
+            int firstProfit;                     // промежуточная переменная для хранения первой и последующей по порядку прибыли
+
+            //Заполняем два массива (расходов и доходов). Определяем прибыли по месяцам:
 
             Console.WriteLine("{0,5}{1,20}{2,20}{3,20}", "Месяц", "Доход, тыс.руб.", "Расход, тыс. руб.", "Прибыль, тыс. руб.");
 
@@ -59,41 +62,74 @@ namespace Homework_Theme_04
                     {
                         arrRevenue[i, j] = i;
                         arrExpense[i, j] = i;
-                 //       arrProfit [i, j] = i;
+                        arrProfit[i, j] = i;
                     }
                     else
                     {
                         arrRevenue[i, j] = r.Next(20_000,200_000);
                         arrExpense[i, j] = r.Next(20_000, 200_000);
-                        //       arrProfit [i, j] = arrExpense[i, j];
-                        //       arrProfit[i, j + 1] = arrRevenue[i, j];
-                        //       arrProfit[i, j + 2] = arrRevenue[i, j] - arrExpense[i, j];
                         Console.Write("{0,5}{1,19}{2,20}{3,20}", i + 1, arrRevenue[i, j], arrExpense[i, j], arrRevenue[i, j] - arrExpense[i, j]);
-                        
+                        arrProfit[i,j]= arrRevenue[i, j] - arrExpense[i, j];
                     }
-                    if (arrRevenue[i, j] - arrExpense[i, j]>0) count++;
+                    if (arrRevenue[i, j] - arrExpense[i, j]>0) count++;   // Считаем количество месяцев с положительной прибылью
                 }
                 Console.WriteLine();
             }
            
- 
+            // Сортировка массива прибыли
+
+            for (int i = 0; i < arrProfit.GetLength(0); i++)
+            {
+                firstProfit = arrProfit[i, 1];
+                for (int j = 0; j < arrProfit.GetLength(0); j++)
+                {
+                        if (firstProfit < arrProfit[j, 1])
+                        {
+                        firstProfit = arrProfit[j, 1];
+                        arrProfit[j, 1] ^= arrProfit[i, 1];
+                        arrProfit[i, 1] ^= arrProfit[j, 1];
+                        arrProfit[j, 1] ^= arrProfit[i, 1];
+                        arrProfit[i, 0] ^= arrProfit[j, 0];
+                        arrProfit[j, 0] ^= arrProfit[i, 0];
+                        arrProfit[i, 0] ^= arrProfit[j, 0];
+                    }
+                }
+            }
+            Console.WriteLine();
+            Console.Write($"Худшая прибыль в месяцах: ");
+            firstProfit = arrProfit[0, 1];
+            Console.Write($"{arrProfit[0, 0] + 1}  ");
+            for (int i = 1; i < arrProfit.GetLength(0); i++)
+            {
+                for (int j = 1; j < arrProfit.GetLength(1); j++)
+                {
+                    if (firstProfit < arrProfit[i, j])
+                    {
+                        countWorstProfit++;
+                    }
+                    if (firstProfit <= arrProfit[i, j] && countWorstProfit < 3)
+                    {
+                        Console.Write($"{arrProfit[i, 0] + 1}  ");
+                    }
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Месяцев с положительной прибылью: {count}");
+            Console.WriteLine();
+
+
+
 
 
             //for (int i = 0; i < arrProfit.GetLength(0); i++)
             //{
-            //    for (int j = 0; j < arrProfit.GetLength(1); j++)
+            //    for (int j = 1; j < arrProfit.GetLength(1); j++)
             //    {
-
-            //        if (j == arrProfit.GetLength(1) - 1 && arrProfit[i, j] > 0)                 
-            //            count++;
-                   
-            //        Console.Write("{0,20}", arrProfit[i, j]);
+            //        Console.Write("{0,5}{1,59}", arrProfit[i, 0] + 1, arrProfit[i, j]);
             //    }
             //    Console.WriteLine();
-                
             //}
-            Console.WriteLine($"Худшая прибыль в месяцах: ");
-            Console.WriteLine($"Месяцев с положительной прибылью: {count}");
+
             Console.ReadKey();
 
             // * Задание 2
