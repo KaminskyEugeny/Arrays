@@ -1,0 +1,7 @@
+D:\skillbox\dz4\obj\Debug\Homework_Theme_04.csprojAssemblyReference.cache
+D:\skillbox\dz4\obj\Debug\Homework_Theme_04.csproj.CoreCompileInputs.cache
+D:\skillbox\dz4\bin\Debug\Homework_Theme_04.exe.config
+D:\skillbox\dz4\bin\Debug\Homework_Theme_04.exe
+D:\skillbox\dz4\bin\Debug\Homework_Theme_04.pdb
+D:\skillbox\dz4\obj\Debug\Homework_Theme_04.exe
+D:\skillbox\dz4\obj\Debug\Homework_Theme_04.pdb
