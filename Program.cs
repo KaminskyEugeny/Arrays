@@ -41,81 +41,131 @@ namespace Homework_Theme_04
             // Худшая прибыль в месяцах: 7, 4, 1, 5, 12
             // Месяцев с положительной прибылью: 10
 
-            int[,] arrRevenue = new int[12, 2];  // массив дохода по месяцам
-            int[,] arrExpense = new int[12, 2];  // массив расхода по месяцам
-            int[,] arrProfit = new int[12, 2];   // массив прибыли
-            int[] arrWorstProfit = new int[12];        // массив худшей прибыли
+            int[] income = new int[12];       //массив, хранящий доходы
+            int[] consuption = new int[12];   //массив, хранящий расходы
+            int[] arrived = new int[12];      //массив, хранящий прибыль
+            int[] months = new int[12]; //массив, хранящий месяца 
             Random r = new Random();
-            int count=0;                         // переменная для хранения количества месяцев с положительной прибылью
-            int countWorstProfit = 0;            // переменная для хранения количества месяцев с худшей прибылью (до 3)
-            int firstProfit;                     // промежуточная переменная для хранения первой и последующей по порядку прибыли
+            int count = 0;                    // переменная для хранения количества месяцев с положительной прибылью
+            int firstProfit;
+
 
             //Заполняем два массива (расходов и доходов). Определяем прибыли по месяцам:
 
-            Console.WriteLine("{0,5}{1,20}{2,20}{3,20}", "Месяц", "Доход, тыс.руб.", "Расход, тыс. руб.", "Прибыль, тыс. руб.");
+            Console.WriteLine("{0,7}{1,21}{2,20}{3,20}", "Месяц", "Доход, тыс.руб.", "Расход, тыс. руб.", "Прибыль, тыс. руб.");
 
-            for (int i=0; i < arrExpense.GetLength(0); i++)
+            for (int i = 0; i < income.Length; i++)
             {
-                for (int j = 0; j < arrExpense.GetLength(1); j++)
-                {
-                    if (0 == j)
-                    {
-                        arrRevenue[i, j] = i;
-                        arrExpense[i, j] = i;
-                        arrProfit[i, j] = i;
-                    }
-                    else
-                    {
-                        arrRevenue[i, j] = r.Next(20_000,200_000);
-                        arrExpense[i, j] = r.Next(20_000, 200_000);
-                        Console.Write("{0,5}{1,19}{2,20}{3,20}", i + 1, arrRevenue[i, j], arrExpense[i, j], arrRevenue[i, j] - arrExpense[i, j]);
-                        arrProfit[i,j]= arrRevenue[i, j] - arrExpense[i, j];
-                    }
-                    if (arrRevenue[i, j] - arrExpense[i, j]>0) count++;   // Считаем количество месяцев с положительной прибылью
-                }
-                Console.WriteLine();
-            }
-           
-            // Сортировка массива прибыли
-
-            for (int i = 0; i < arrProfit.GetLength(0); i++)
-            {
-                firstProfit = arrProfit[i, 1];
-                for (int j = 0; j < arrProfit.GetLength(0); j++)
-                {
-                        if (firstProfit < arrProfit[j, 1])
-                        {
-                        firstProfit = arrProfit[j, 1];
-                        arrProfit[j, 1] ^= arrProfit[i, 1];
-                        arrProfit[i, 1] ^= arrProfit[j, 1];
-                        arrProfit[j, 1] ^= arrProfit[i, 1];
-                        arrProfit[i, 0] ^= arrProfit[j, 0];
-                        arrProfit[j, 0] ^= arrProfit[i, 0];
-                        arrProfit[i, 0] ^= arrProfit[j, 0];
-                    }
-                }
-            }
-            Console.WriteLine();
-            Console.Write($"Худшая прибыль в месяцах: ");
-            firstProfit = arrProfit[0, 1];
-            Console.Write($"{arrProfit[0, 0] + 1}  ");
-            for (int i = 1; i < arrProfit.GetLength(0); i++)
-            {
-                for (int j = 1; j < arrProfit.GetLength(1); j++)
-                {
-                    if (firstProfit < arrProfit[i, j])
-                    {
-                        countWorstProfit++;
-                    }
-                    if (firstProfit <= arrProfit[i, j] && countWorstProfit < 3)
-                    {
-                        Console.Write($"{arrProfit[i, 0] + 1}  ");
-                    }
-                }
+                income[i] = r.Next(100_000, 100_010);
+                consuption[i] = r.Next(100_000, 100_010);
+                arrived[i] = income[i] - consuption[i];
+                months[i] = i + 1;
+                if (arrived[i] > 0) count++;
+                Console.WriteLine("{0,8}{1,19}{2,20}{3,20}", months[i], income[i], consuption[i], arrived[i]);
             }
             Console.WriteLine();
             Console.WriteLine($"Месяцев с положительной прибылью: {count}");
             Console.WriteLine();
+            Array.Sort(arrived, months);
+            //for (int i = 0; i < income.Length; i++)
+            //{
+            //    Console.WriteLine("{0,8}{1,19}{2,20}{3,20}", months[i], income[i], consuption[i], arrived[i]);
+            //}
+            Console.Write("Худшая прибыль в месяцах: ");
+            count = 1;
+            firstProfit = arrived[0];
+            for (int i = 0; i < income.Length; i++)
+            {
+
+                if (firstProfit == arrived[i])
+                {
+                    Console.Write($"  {months[i]}");
+                }
+                else if (firstProfit < arrived[i] && count < 3)
+                {
+                    firstProfit = arrived[i];
+                    Console.Write($"  {months[i]}");
+                    count++;
+                }
+                else break;
+            }
+            Console.WriteLine("\n\n\n");
+
+            //int[,] arrRevenue = new int[12, 2];  // массив дохода по месяцам
+            //int[,] arrExpense = new int[12, 2];  // массив расхода по месяцам
+            //int[,] arrProfit = new int[12, 2];   // массив прибыли
+            //int[] arrWorstProfit = new int[12];        // массив худшей прибыли
+            //Random r = new Random();
+            //int count=0;                         // переменная для хранения количества месяцев с положительной прибылью
+            //int countWorstProfit = 0;            // переменная для хранения количества месяцев с худшей прибылью (до 3)
+            //int firstProfit;                     // промежуточная переменная для хранения первой и последующей по порядку прибыли
+
+            ////Заполняем два массива (расходов и доходов). Определяем прибыли по месяцам:
+
+            //Console.WriteLine("{0,5}{1,20}{2,20}{3,20}", "Месяц", "Доход, тыс.руб.", "Расход, тыс. руб.", "Прибыль, тыс. руб.");
+
+            //for (int i=0; i < arrExpense.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < arrExpense.GetLength(1); j++)
+            //    {
+            //        if (0 == j)
+            //        {
+            //            arrRevenue[i, j] = i;
+            //            arrExpense[i, j] = i;
+            //            arrProfit[i, j] = i;
+            //        }
+            //        else
+            //        {
+            //            arrRevenue[i, j] = r.Next(20_000,200_000);
+            //            arrExpense[i, j] = r.Next(20_000, 200_000);
+            //            Console.Write("{0,5}{1,19}{2,20}{3,20}", i + 1, arrRevenue[i, j], arrExpense[i, j], arrRevenue[i, j] - arrExpense[i, j]);
+            //            arrProfit[i,j]= arrRevenue[i, j] - arrExpense[i, j];
+            //        }
+            //        if (arrRevenue[i, j] - arrExpense[i, j]>0) count++;   // Считаем количество месяцев с положительной прибылью
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //// Сортировка массива прибыли
+
+            //for (int i = 0; i < arrProfit.GetLength(0); i++)
+            //{
+            //    firstProfit = arrProfit[i, 1];
+            //    for (int j = 0; j < arrProfit.GetLength(0); j++)
+            //    {
+            //            if (firstProfit < arrProfit[j, 1])
+            //            {
+            //            firstProfit = arrProfit[j, 1];
+            //            arrProfit[j, 1] ^= arrProfit[i, 1];
+            //            arrProfit[i, 1] ^= arrProfit[j, 1];
+            //            arrProfit[j, 1] ^= arrProfit[i, 1];
+            //            arrProfit[i, 0] ^= arrProfit[j, 0];
+            //            arrProfit[j, 0] ^= arrProfit[i, 0];
+            //            arrProfit[i, 0] ^= arrProfit[j, 0];
+            //        }
+            //    }
+            //}
+            //Console.WriteLine();
+            //Console.Write($"Худшая прибыль в месяцах: ");
+            //firstProfit = arrProfit[0, 1];
+            //Console.Write($"{arrProfit[0, 0] + 1}  ");
+            //for (int i = 1; i < arrProfit.GetLength(0); i++)
+            //{
+            //    for (int j = 1; j < arrProfit.GetLength(1); j++)
+            //    {
+            //        if (firstProfit < arrProfit[i, j])
+            //        {
+            //            countWorstProfit++;
+            //        }
+            //        if (firstProfit <= arrProfit[i, j] && countWorstProfit < 3)
+            //        {
+            //            Console.Write($"{arrProfit[i, 0] + 1}  ");
+            //        }
+            //    }
+            //}
+            //Console.WriteLine();
+            //Console.WriteLine($"Месяцев с положительной прибылью: {count}");
+            //Console.WriteLine();
 
 
 
@@ -158,51 +208,51 @@ namespace Homework_Theme_04
             // 
             // Справка: https://ru.wikipedia.org/wiki/Треугольник_Паскаля
 
-            //Console.Write("Введите количество строк треугольника Паскаля: ");
-            //int n = int.Parse(Console.ReadLine());
-            //int[][] trianglePascal = new int[n][];
-            //string[][] trianglePascalStr = new string[n][];
-            //trianglePascal[0] = new int[] { 1 };
-            //trianglePascalStr[0] = new string[] {""};
-            //string str;
-            //for (int i = 1; i < trianglePascal.Length; i++)
-            //{
-            //    trianglePascal[i] = new int[i + 1];
-            //    trianglePascalStr[i] = new string[i + 1];
-            //    for (int j = 0; j <= i; j++)
-            //    {
-            //        if (j == 0 || j == i)
-            //            trianglePascal[i][j] = 1;
-            //        else
-            //        {
-            //            trianglePascal[i][j] = trianglePascal[i - 1][j - 1] + trianglePascal[i - 1][j];
-            //        }
-            //    }
-            //}
+            Console.Write("Введите количество строк треугольника Паскаля: ");
+            int n = int.Parse(Console.ReadLine());
+            int[][] trianglePascal = new int[n][];
+            string[][] trianglePascalStr = new string[n][];
+            trianglePascal[0] = new int[] { 1 };
+            trianglePascalStr[0] = new string[] { "" };
+            string str;
+            for (int i = 1; i < trianglePascal.Length; i++)
+            {
+                trianglePascal[i] = new int[i + 1];
+                trianglePascalStr[i] = new string[i + 1];
+                for (int j = 0; j <= i; j++)
+                {
+                    if (j == 0 || j == i)
+                        trianglePascal[i][j] = 1;
+                    else
+                    {
+                        trianglePascal[i][j] = trianglePascal[i - 1][j - 1] + trianglePascal[i - 1][j];
+                    }
+                }
+            }
 
-            //for (int i = 0; i < trianglePascal.Length; i++)
-            //{
-            //    for (int j = 0; j < trianglePascal[i].Length; j++)
-            //    {
-            //        Console.Write("{0,-3} ", trianglePascal[i][j]);  // При выводе используем выравнивание по левому краю 3-х символьного поля
-            //    }
-            //    Console.WriteLine();
-            //}
+            for (int i = 0; i < trianglePascal.Length; i++)
+            {
+                for (int j = 0; j < trianglePascal[i].Length; j++)
+                {
+                    Console.Write("{0,-7} ", trianglePascal[i][j]);  // При выводе используем выравнивание по левому краю 3-х символьного поля
+                }
+                Console.WriteLine();
+            }
 
-            //for (int i = 0; i < trianglePascal.Length; i++)
-            //{
-            //    Console.Write("".PadLeft(n*2 - i*2));
-            //    for (int j = 0; j < trianglePascal[i].Length; j++)
-            //    {
-            //        trianglePascalStr[i][j] = Convert.ToString(trianglePascal[i][j]);
-            //        str = trianglePascalStr[i][j];
-            //        Console.Write("{0,-3} ",str);
-            //    }
-            //    Console.WriteLine();
-            //    Console.WriteLine();
-            //}
+            for (int i = 0; i < trianglePascal.Length; i++)
+            {
+                Console.Write("".PadLeft(n * 4 - i * 4));
+                for (int j = 0; j < trianglePascal[i].Length; j++)
+                {
+                    trianglePascalStr[i][j] = Convert.ToString(trianglePascal[i][j]);
+                    str = trianglePascalStr[i][j];
+                    Console.Write("{0,-7} ", str);
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
 
-            //Console.ReadKey();
+            Console.ReadKey();
 
 
             //-------------------------------------------------------------------------------------------------------------------------------- 

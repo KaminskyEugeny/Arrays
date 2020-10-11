@@ -12,3 +12,10 @@ D:\skillbox\arr4\obj\Debug\Homework_Theme_04.pdb
 D:\skillbox\arr4\bin\Debug\Homework_Theme_04.exe.config
 D:\skillbox\arr4\bin\Debug\Homework_Theme_04.exe
 D:\skillbox\arr4\bin\Debug\Homework_Theme_04.pdb
+D:\skillbox\Arrays\bin\Debug\Homework_Theme_04.exe.config
+D:\skillbox\Arrays\bin\Debug\Homework_Theme_04.exe
+D:\skillbox\Arrays\bin\Debug\Homework_Theme_04.pdb
+D:\skillbox\Arrays\obj\Debug\Homework_Theme_04.csprojAssemblyReference.cache
+D:\skillbox\Arrays\obj\Debug\Homework_Theme_04.csproj.CoreCompileInputs.cache
+D:\skillbox\Arrays\obj\Debug\Homework_Theme_04.exe
+D:\skillbox\Arrays\obj\Debug\Homework_Theme_04.pdb
